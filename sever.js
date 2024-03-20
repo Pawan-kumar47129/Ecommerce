@@ -7,6 +7,10 @@ const bcrypt = require("bcryptjs");
 const server_config = require("./configs/server.config");
 const db_config = require("./configs/db.config");
 const user_model = require("./models/user.models");
+const bodyParser=require('body-parser');
+app.use(bodyParser.json()); // this is middleware  used to read json as like js object
+app.use(bodyParser.urlencoded({extended:true}));
+
 //Connection with mongodb
 mongoose.connect(db_config.DB_URL);
 const db = mongoose.connection;
@@ -23,8 +27,7 @@ async function init() {
   if (user) {
     console.log("Admin is already present");
     return;
-  } 
-  else {
+  } else {
     try {
       let user = await user_model.create({
         name: "pawan kumar",
@@ -40,7 +43,8 @@ async function init() {
     }
   }
 }
-
+//Stich the router to the server
+require("./routes/auth.routes")(app); //call routes and passing app object
 /* Start the server*/
 console.log(server_config.PORT);
 app.listen(server_config.PORT, (err) => {
