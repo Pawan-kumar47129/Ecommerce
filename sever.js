@@ -45,6 +45,7 @@ async function init() {
 }
 //Stich the router to the server
 require("./routes/auth.routes")(app); //call routes and passing app object
+
 /* Start the server*/
 console.log(server_config.PORT);
 app.listen(server_config.PORT, (err) => {
