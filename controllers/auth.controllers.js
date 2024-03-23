@@ -1,6 +1,8 @@
 // I need to write the controller / logic to ragister a user
 const bcrypt=require('bcryptjs');
 const user_model=require('../models/user.models')
+const jwt=require('jsonwebtoken');
+const secret=require('../configs/auth.config');
 exports.signup=async (req,res)=>{
     /*
         *Logic to create the user
@@ -34,4 +36,31 @@ exports.signup=async (req,res)=>{
 
    }
    //3.Return the response back to the user 
+}
+
+// create logic to signin
+exports.signin= async(req,res)=>{
+    //check if the user id is present in the system
+    const user=await user_model.findOne({userId:req.body.userId});
+    if(user==null){
+        return res.status(400).send({
+            message:"UserId  is passed is not valid userId"
+        });
+    }
+    const isValidPassword=bcrypt.compareSync(req.body.password,user.password);
+    
+    // check password is correct
+    if(!isValidPassword){
+        return res.status(401).send({message:"Wrong password passed"});
+    }
+    // using jwt we will create the access token with agiven TTland return
+    const token=jwt.sign({id:user.userId},secret.secret,{expiresIn:120})
+    res.status(200).send({
+        name: user.name,
+        userId: user.userId,
+        email: user.email,
+        userType:user.userType,
+        accessToken:token
+
+    });
 }
