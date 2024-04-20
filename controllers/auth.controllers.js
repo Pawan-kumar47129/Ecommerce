@@ -1,5 +1,5 @@
 // I need to write the controller / logic to ragister a user
-const bcrypt=require('bcryptjs');
+const bcrypt= require('bcryptjs');
 const user_model=require('../models/user.models')
 const jwt=require('jsonwebtoken');
 const secret=require('../configs/auth.config');

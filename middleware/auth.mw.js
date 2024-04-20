@@ -7,7 +7,7 @@ try{
 //check for the name
 if(!req.body.name){
     return res.status(400).send({
-        message:"Failed ! Name was not provid in request body"
+        message:"Failed ! Name was not provide in request body"
     });
 }
 

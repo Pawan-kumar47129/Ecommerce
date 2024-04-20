@@ -50,7 +50,7 @@ require("./routes/auth.routes")(app); //call routes and passing app object
 console.log(server_config.PORT);
 app.listen(server_config.PORT, (err) => {
   if (err) {
-    console.log("sever not start ");
+    console.log("server not start ");
   } else {
     console.log(`server started at port ${server_config.PORT}`);
   }
